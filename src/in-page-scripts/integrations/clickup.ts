@@ -68,7 +68,21 @@ class Clickup implements WebToolIntegration {
             description = $$.try('.checklist-item__name', issueElement).textContent;
         }
 
-        let projectName = $$.try('.breadcrumbs__link[data-category]').textContent;
+        const spaceName = $$.try('.breadcrumbs__link_first').textContent;
+
+        const folderName = $$.try('.breadcrumbs__link[data-category]').textContent;
+
+        const listName = $$.try('.breadcrumbs__link[data-subcategory]').textContent;
+
+
+        let projectName = '';
+        if(spaceName && folderName && listName){
+          projectName = `[${spaceName.trim().replace(`'s Space`, ``)}]-[${folderName.trim()}]-[${listName.trim()}]`;
+        } else {
+          projectName = `Unknown project`;
+        }
+
+
 
         let tagNames = tags.map(_ => _.textContent);
 
